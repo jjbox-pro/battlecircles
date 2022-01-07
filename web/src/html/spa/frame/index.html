@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html style="background: black;">
+
+<head>
+	<meta charset="utf-8">
+
+	<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="Pragma" content="no-cache">
+	<meta name="Cache-Control" content="no-cache">
+
+	<script>
+		(function main(environment, base) {
+			if (!environment.globalThis)
+				environment.globalThis = this;
+
+			globalThis._include_ = {
+				list: new Array(),
+				add: function (include, opt) {
+					this.list.push(new Array(include, opt));
+
+					return this;
+				}
+			};
+
+			var $launcher = document.createElement('script');
+			$launcher.src = base + '/js/comp/launcher/chunk_launcher.js?v=<*filetime=js/comp/launcher/chunk_launcher.js>';
+			document.head.appendChild($launcher);
+		})(this, 'https://content.jjbox.ru/battlecircles');
+
+		globalThis._include_
+			.add(function () { return new Array('/comp/lang/chunk_lang.js?v=<*filetime=/js/comp/lang/chunk_lang.js>'); }, { await: true })
+			.add(function () { return new Array('/text/' + lg('language') + '/chunk_text.js?v=' + lg.getCache(lg('language'))); }, { await: true })
+			.add(function () {
+				return new Array(function (resolve) {
+					document.title = lg('gamename');
+
+					document.head.insertAdjacentHTML('beforeend',
+						'<link rel="icon" type="image/x-icon" href="' + _url_.img('/favicon.ico?v=2') + '">'
+					);
+
+					if (resolve)
+						resolve();
+				})
+			}, { type: 'exec' })
+			
+			.add(function () { return new Array('/spa/frame/chunk_frame.js?v=<*filetime=js/spa/frame/chunk_frame.js>'); })
+
+			.add(function () { return new Array('/spa/frame/index.css?v=<*filetime=css/spa/frame/index.css>'); }, { type: 'style' });
+	</script>
+</head>
+
+<body>
+	<iframe id="frame" hidden></iframe>
+</body>
+
+</html>

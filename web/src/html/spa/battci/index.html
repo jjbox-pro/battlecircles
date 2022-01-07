@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html style="background: black;">
+
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    [%meta.html%]
+
+    <script>
+        (function main(environment, base) {
+            if (!environment.globalThis)
+                environment.globalThis = this;
+
+            globalThis._include_ = {
+                list: new Array(),
+                add: function (include, type) {
+                    this.list.push(new Array(include, type));
+
+                    return this;
+                }
+            };
+
+            var $launcher = document.createElement('script');
+            $launcher.src = base + '/js/comp/launcher/chunk_launcher.js?v=<*filetime=js/comp/launcher/chunk_launcher.js>';
+            document.head.appendChild($launcher);
+        })(this, [location.href.split(/(\/|\\)html(\/|\\)/).shift()][0]);
+        
+        globalThis._include_
+            .add(function () { return new Array('/comp/lang/chunk_lang.js?v=<*filetime=/js/comp/lang/chunk_lang.js>'); }, { await: true })
+            .add(function () { return new Array('/text/' + lg('language') + '/chunk_text.js?v=' + lg.getCache(lg('language'))); }, { await: true })
+            .add(function () { return new Array(function (resolve) { document.title = lg('gamename'); if (resolve) resolve(); }) }, { type: 'exec' });
+    </script>
+
+    [%include0.html платформенные скрипты%]
+
+    <script>
+        globalThis._include_
+            .add(function () { return new Array('/spa/battci/lib_battci.js?v=<*filetime=js/spa/battci/lib_battci.js>'); })
+
+            .add(function () { return new Array('/spa/battci/chunk_battci.js?v=<*filetime=js/spa/battci/chunk_battci.js>'); })
+            
+            .add(function () { return new Array('/spa/battci/index.css?v=<*filetime=css/spa/battci/index.css>'); }, { type: 'style' });
+    </script>
+
+    [%include1.html платформенные скрипты%]
+</head>
+
+<body>
+    <main class="app"></main>
+</body>
+
+</html>

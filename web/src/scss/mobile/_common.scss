@@ -1,0 +1,13 @@
+@import "../_common.scss";
+
+$v-bg-panel: linear-gradient(90deg, rgba(231, 204, 161, 1) 0%, rgba(194, 153, 109, 1) 100%);
+$v-bg-panelInfo: linear-gradient(0deg, rgba(156, 76, 37, 1) 0%, rgba(225, 147, 82, 1) 40%, rgba(225, 147, 82, 1) 60%, rgba(156, 76, 37, 1) 100%);
+
+@mixin tbl-cell($tblClass: s-tbl){
+	.-if-mob .#{$tblClass}>thead>tr>th,
+	.-if-mob .#{$tblClass}>tbody>tr>th,
+	.-if-mob .#{$tblClass}>tfoot>tr>th,
+	.-if-mob .#{$tblClass}>thead>tr>td,
+	.-if-mob .#{$tblClass}>tbody>tr>td,
+	.-if-mob .#{$tblClass}>tfoot>tr>td{@content;}
+}

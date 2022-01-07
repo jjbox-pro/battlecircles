@@ -1,0 +1,2 @@
+<*language>en
+<*gamename>Battle circles

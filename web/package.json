@@ -1,0 +1,49 @@
+{
+	"name": "battlecircles_web",
+	"version": "1.0.0",
+	"description": "",
+	"type": "commonjs",
+	"private": true,
+	"devDependencies": {
+		"@babel/core": "^7.16.0",
+		"@babel/preset-env": "^7.16.4",
+		"@babel/preset-typescript": "^7.16.0",
+		"babel-loader": "^8.2.3",
+		"del": "^6.0.0",
+		"eslint": "^8.5.0",
+		"eslint-plugin-import": "^2.25.3",
+		"eslint-webpack-plugin": "^3.1.1",
+		"gulp": "^4.0.2",
+		"gulp-cli": "^2.3.0",
+		"gulp-concat": "^2.6.1",
+		"gulp-rename": "^2.0.0",
+		"gulp-terser": "^2.1.0",
+		"jjbox-utils": "^1.0.19",
+		"merge-stream": "^2.0.0",
+		"typescript": "^4.5.2",
+		"webpack": "^5.64.1",
+		"webpack-cli": "^4.9.1",
+		"wofh-builder-cache": "^1.0.11",
+		"wofh-builder-css": "^1.0.32",
+		"wofh-builder-lang": "^1.0.10",
+		"wofh-builder-platforms": "^1.0.8",
+		"wofh-builder-tmpl": "^2.0.18"
+	},
+	"scripts": {
+		"build": "(npm run gulp:build && npm run wofh:processing && npm run wofh:copy:html && npm run webpack:build && npm run wofh:postprocessing) & npm run timer",
+		"gulp:build": "npx gulp",
+		"webpack:build": "npx webpack",
+		"wofh:processing": "node ./scripts/wofh-processing.cjs",
+		"wofh:copy:html": "node ./scripts/wofh-copy-html.cjs",
+		"wofh:postprocessing": "node ./scripts/wofh-postprocessing.cjs",
+		"electron:watch": "node ./scripts/electron-watch.cjs",
+		"timer": "node ./scripts/wofh-timer.cjs",
+		"desktop:run": "cd ../desktop && npx electron ./test web",
+		"postinstall": "node ./scripts/project-symlink.cjs"
+	},
+	"author": "Mokogon Denis<workdenizz@gmail.com>",
+	"license": "ISC",
+	"dependencies": {
+		"core-js": "^3.20.0"
+	}
+}

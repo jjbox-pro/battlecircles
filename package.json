@@ -1,0 +1,13 @@
+{
+	"name": "project_battlecircles",
+	"version": "1.0.0",
+	"description": "Simple game pet-project. For test purposes only.",
+	"private": true,
+	"scripts": {
+		"doinstall": "npm install",
+		"preinstall": "node ./scripts/project-preinstall.cjs",
+		"postinstall": "cd web && npm install && cd ../desktop && npm install && cd ../mobile && npm install"
+	},
+	"author": "Mokogon Denis<workdenizz@gmail.com>",
+	"license": "ISC"
+}

@@ -1,0 +1,9 @@
+{
+	"scripts": {
+		"build": "cd ../../../ && npm run build:dist && npx cordova build android",
+		"run-emulator": "cd ../../../ && npm run build:dist && npx cordova emulate android --target=Nexus_4_API_22",
+		"run-device": "cd ../../../ && npm run build:dist && npx cordova run android -device",
+		"add-platform": "cd ../../../ && npx cordova platform add android",
+		"rm-platform": "cd ../../../ && npx cordova platform rm android"
+	}
+}

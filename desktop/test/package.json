@@ -1,0 +1,13 @@
+{
+	"name": "wofh-desktop-test",
+	"version": "1.4.43",
+	"description": "π — Ways of History. Global strategic game.",
+	"main": "main-test.js",
+	"author": "Glyph Worlds Team",
+	"license": "ISC",
+	"dependencies": {},
+	"devDependencies": {},
+	"scripts": {
+		"start": "cd ../ && npx electron ./test web"
+	}
+}

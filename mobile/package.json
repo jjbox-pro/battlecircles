@@ -1,0 +1,46 @@
+{
+	"name": "ru.battlecircles",
+	"displayName": "Battle Circles",
+	"version": "1.0.0",
+	"description": "Simple pet-project.",
+	"private": true,
+	"author": "Mokogon Denis<workdenizz@gmail.com>",
+	"keywords": [
+		"ecosystem:cordova"
+	],
+	"license": "ISC",
+	"devDependencies": {
+		"@quasar/icongenie": "^2.4.2",
+		"cordova": "^10.0.0",
+		"cordova-android": "^9.1.0",
+		"cordova-plugin-android-permissions": "^1.1.2",
+		"cordova-plugin-nativestorage": "^2.3.2",
+		"cordova-plugin-platform-accessor": "github:jjbox-pro/cordova-plugin-platform-accessor",
+		"cordova-plugin-splashscreen": "^6.0.0",
+		"cordova-plugin-whitelist": "^1.3.4",
+		"del": "^6.0.0",
+		"gulp": "^4.0.2",
+		"gulp-rename": "^2.0.0",
+		"jjbox-utils": "^1.0.19",
+		"merge-stream": "^2.0.0",
+		"wofh-builder-cssbase": "^1.0.5"
+	},
+	"cordova": {
+		"plugins": {
+			"cordova-plugin-whitelist": {},
+			"cordova-plugin-platform-accessor": {},
+			"cordova-plugin-nativestorage": {},
+			"cordova-plugin-android-permissions": {},
+			"cordova-plugin-splashscreen": {}
+		},
+		"platforms": [
+			"android"
+		]
+	},
+	"scripts": {
+		"build:dist": "npx gulp && npm run wofh:processing",
+		"wofh:processing": "node ./scripts/wofh-processing.cjs",
+		"cordova:requirements": "npx cordova requirements",
+		"postinstall": "node ./scripts/project-symlink.cjs"
+	}
+}

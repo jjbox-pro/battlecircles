@@ -1,0 +1,8 @@
+<*char-percent>%
+<*char-space>&#32;
+<*char-nspace>&nbsp;
+<*char-num>#
+<*char-dash>—
+<*char-dot>.
+<*char-semicolon>;
+<*char-colon>:

@@ -1,0 +1,16 @@
+/dist/platforms/**/css
+/dist/platforms/**/html
+/dist/platforms/**/js
+/dist/platforms/**/img
+/dist/platforms/**/snd
+
+/icongenie/src-cordova
+
+/node_modules
+/platforms
+/plugins
+
+/res/**
+!res/icon.png
+
+/www/dist

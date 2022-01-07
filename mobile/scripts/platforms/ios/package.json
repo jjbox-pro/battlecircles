@@ -1,0 +1,9 @@
+{
+	"scripts": {
+		"build": "cd ../../../ && npm run build:dist && npx cordova build ios",
+		"run-emulator": "cd ../../../ && npm run build:dist && npx cordova emulate ios",
+		"run-device": "cd ../../../ && npm run build:dist && npx cordova run ios -device",
+		"add-platform": "cd ../../../ && npm run build:dist && npx cordova platform add ios",
+		"rm-platform": "cd ../../../ && npm run build:dist && npx cordova platform rm ios"
+	}
+}

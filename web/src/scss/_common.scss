@@ -1,0 +1,93 @@
+@mixin __atlas__($args...){
+    /*!__atlas__{#{$args}}*/
+}
+
+@function __atlas__($args...){
+    @return #{"/*!__atlas__{#{$args}}*/"};
+}
+
+
+
+@function __url__($url){
+    @return url("/cont" + $url);
+}
+
+@mixin vendor($prop, $args...){
+    $vendors: -webkit-;
+    
+    @each $vendor in $vendors {
+        #{$vendor}#{$prop}: $args;
+    }
+    
+    #{$prop}: $args;
+}
+
+@mixin vendorFull($prop, $args...){
+    $vendors: -ms- -o- -moz- -webkit-;
+    
+    @each $vendor in $vendors {
+        #{$vendor}#{$prop}: $args;
+    }
+    
+    #{$prop}: $args;
+}
+
+@mixin vendorVal($prop, $val){
+    $vendors: -webkit-;
+    
+    @each $vendor in $vendors {
+        #{$prop}: #{$vendor}#{$val};
+    }
+    
+    #{$prop}: $val;
+}
+
+@mixin calc($prop, $exp){
+    #{$prop}: -webkit-calc(#{$exp});
+    #{$prop}: -moz-calc(#{$exp});
+    #{$prop}: calc(#{$exp});
+}
+
+@mixin textEllipsis($ignoreDisplay: false){
+    @if( $ignoreDisplay == false ){
+        display: inline-block;
+    }
+    overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+
+@mixin textShadow($shadowColor: black, $textColor: default, $blur: 2px){
+    @if( $shadowColor == none ){
+        text-shadow: none;
+    }
+    @else{
+        text-shadow: $shadowColor 1px 0px $blur, $shadowColor -1px -1px $blur, $shadowColor -1px 0px $blur, $shadowColor 1px -1px $blur;
+    }
+    
+    @if( $textColor != default ){
+        color: $textColor;
+    }
+}
+
+@mixin tbl-cell($tblClass: s-tbl){
+	.#{$tblClass}>thead>tr>th,
+	.#{$tblClass}>tbody>tr>th,
+	.#{$tblClass}>tfoot>tr>th,
+	.#{$tblClass}>thead>tr>td,
+	.#{$tblClass}>tbody>tr>td,
+	.#{$tblClass}>tfoot>tr>td{@content;}
+}
+
+
+
+@mixin mix-switcher-size($width: false, $height: false){
+	@if( $height == false ){
+		width: 13px;
+	}
+	@if( $width == false ){
+		height: 13px;
+	}
+}
+
+
+
+$var-button1-height: 33px;

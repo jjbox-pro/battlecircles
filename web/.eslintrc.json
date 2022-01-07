@@ -1,0 +1,51 @@
+{
+	"parserOptions": {
+		"ecmaVersion": "latest"
+	},
+    "env": {
+		"es2021": true,
+		"browser": true,
+		"commonjs": true
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:import/recommended"
+	],
+	"globals": {
+		"$": "readonly",
+		"jQuery": "readonly",
+		"Clipboard": "readonly",
+		"Howl": "readonly",
+		"Howler": "readonly",
+		"cordova": "readonly",
+		"moment": "readonly",
+		"lg": "readonly",
+		"_url_": "readonly",
+		"jj": "writable"
+	},
+	"rules": {
+		"no-unused-vars": "warn",
+		"no-redeclare": "warn",
+		"no-constant-condition": "warn",
+		"no-prototype-builtins": "warn",
+		"no-empty": "warn",
+		"no-debugger": "warn",
+		"no-extra-semi": "warn",
+		"no-unexpected-multiline": "warn",
+		"no-unreachable": "warn",
+		"no-undefined": "warn",
+		"no-use-before-define": [
+			"error",
+			{
+				"variables": false,
+				"functions": false
+			}
+		]
+	},
+	"ignorePatterns": [
+		"~dist/",
+		"node_modules/",
+		"src/js/lib/",
+		"*.cjs"
+	]
+}
