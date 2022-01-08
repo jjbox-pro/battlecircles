@@ -20,7 +20,7 @@ MessMgr.prototype.init = function () {
 };
 
 MessMgr.prototype.initNotifListeners = function () {
-	notifMgr
+	Notif
 		.addListener(Notif.ids.accMessage, 'messMgr', function (mess) {
 			var pos = this.thredPos.indexOf(mess.thread);
 
@@ -39,7 +39,7 @@ MessMgr.prototype.initNotifListeners = function () {
 
 			this.unshift(updMess, pos);
 
-			notifMgr.runEvent(Notif.ids.accMessageUpdate, updMess);
+			Notif.sendNotif(Notif.ids.accMessageUpdate, updMess);
 		}, this)
 		.addListener(Notif.ids.accMessageNew, 'messMgr', function (messNew) {
 			messNew.account1 = messNew.creater;
@@ -54,7 +54,7 @@ MessMgr.prototype.initNotifListeners = function () {
 
 			this.unshift(messNew);
 
-			notifMgr.runEvent(Notif.ids.accMessageUpdate, messNew);
+			Notif.sendNotif(Notif.ids.accMessageUpdate, messNew);
 		}, this);
 };
 
@@ -66,7 +66,7 @@ MessMgr.prototype.load = function (pos) {
 			messMgr.list[resp.first + i] = resp.list[i];
 		}
 
-		notifMgr.runEvent(Notif.ids.accMessagesLoaded, resp);
+		Notif.sendNotif(Notif.ids.accMessagesLoaded, resp);
 	});
 };
 
@@ -104,6 +104,6 @@ module.exports = {messMgr};
 
 
 //#region offlineImports
-var { notifMgr, Notif } = require('@/app/core/notifMgr');
+var { Notif } = require('@/app/core/notif');
 var { reqMgr } = require('@/app/core/reqMgr');
 //#endregion offlineImports

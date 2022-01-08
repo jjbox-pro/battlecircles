@@ -1,74 +1,43 @@
 class Notif {
+	static ids = {};
+	static notifs = {};
+	static handler = 0;
 	static delay = 500;
 	static sDelay = 250;
-	static ids = {};
 
-	static add = (function () {
+	static init() { }
+
+	static add = (() => {
 		var handler = 0, i;
-	
+
 		return function (ids) {
 			if (typeof (ids) === 'string') {
-				Notif.ids[ids] = ++handler;
-	
+				this.ids[ids] = ++handler;
+
 				return;
 			}
-	
+
 			for (i = 0; i < ids.length; i++)
-				Notif.ids[ids[i]] = ++handler;
+				this.ids[ids[i]] = ++handler;
 		};
 	})();
-	
-	static get = function (notifName) {
+
+	static get(notifName) {
 		if (typeof (this.ids[notifName]) === 'undefined')
 			this.add(notifName);
-	
+
 		return this.ids[notifName];
-	};
-	
-
-	constructor(notifData, notifId, handler, callback, context) {
-		Object.assign(this, notifData);
-
-		this.id = this.id || notifId;
-		this.handler = this.handler || handler;
-		this.callback = this.callback || callback;
-		this.context = this.context || context;
-
-		if (typeof (this.params) !== 'undefined')
-			this.paramsArr = notifMgr.toArray(this.params);
-		else
-			delete this.params;
 	}
 
-	getId() {
-		return this.id;
-	}
-	
-	getHandler() {
-		return this.handler;
-	}
-}
-
-
-
-class NotifMgr {
-	constructor() {
-		this.notifs = {};
-
-		this.handler = 0;
-	}
-
-	init() { }
-
-	getHandler(){
+	static getHandler() {
 		return ++this.handler;
 	}
 
-	toArray(params) {
+	static toArray(params) {
 		return Array.isArray(params) ? params : [params];
 	}
 
-	addListener(notifId, handler, cb, context) {
+	static addListener(notifId, handler, cb, context) {
 		var notifData = {};
 
 		if (typeof (notifId) === 'object') {
@@ -82,7 +51,7 @@ class NotifMgr {
 
 				cb = notifData.cb || notifData.callback;
 			}
-			else if (cb && typeof(cb.params) !== 'undefined')
+			else if (cb && typeof (cb.params) !== 'undefined')
 				notifData.params = cb.params;
 		}
 
@@ -91,7 +60,7 @@ class NotifMgr {
 		return this;
 	}
 
-	attachNotif(notif) {
+	static attachNotif(notif) {
 		var notifId = notif.getId();
 
 		this.notifs[notifId] = this.notifs[notifId] || {};
@@ -99,14 +68,14 @@ class NotifMgr {
 		return this.notifs[notifId][notif.getHandler()] = notif;
 	}
 
-	removeListener(notif, handler) {
-		if (notif instanceof Object)
+	static removeListener(notif, handler) {
+		if (typeof (notif) === 'object')
 			notif = notif.id;
 
 		delete this.notifs[notif][handler];
 	}
 
-	removeListeners(handler, list) {
+	static removeListeners(handler, list) {
 		list = list || this.notifs;
 
 		var notif;
@@ -119,7 +88,7 @@ class NotifMgr {
 				this.removeListener(notif, handler);
 	}
 
-	sendNotif(notifId, data, ...restParams) {
+	static sendNotif(notifId, data, ...restParams) {
 		const notifs = this.notifs[notifId];
 
 		if (!notifs)
@@ -138,15 +107,31 @@ class NotifMgr {
 
 		return this;
 	}
+
+
+	constructor(notifData, notifId, handler, callback, context) {
+		Object.assign(this, notifData);
+
+		this.id = this.id || notifId;
+		this.handler = this.handler || handler;
+		this.callback = this.callback || callback;
+		this.context = this.context || context;
+
+		if (typeof (this.params) !== 'undefined')
+			this.paramsArr = Notif.toArray(this.params);
+		else
+			delete this.params;
+	}
+
+	getId() {
+		return this.id;
+	}
+
+	getHandler() {
+		return this.handler;
+	}
 }
 
 
-NotifMgr.prototype.runEvent = NotifMgr.prototype.sendNotif;
 
-
-
-const notifMgr = new NotifMgr();
-
-
-
-module.exports = { NotifMgr, notifMgr, Notif };
+module.exports = { Notif };

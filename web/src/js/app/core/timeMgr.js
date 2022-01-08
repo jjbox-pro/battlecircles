@@ -75,7 +75,7 @@ function TimeMgr(){
                             
                             if( notifs )
                                 notifs.split(',').forEach(function(notif){
-                                    notifMgr.runEvent(+notif);
+                                    Notif.sendNotif(+notif);
                                 });
                         }
                         
@@ -394,5 +394,5 @@ module.exports = {TimeMgr, timeMgr};
 
 //#region offlineImports
 var { utils } = require('@/app/core/utils');
-var { notifMgr } = require('@/app/core/notifMgr');
+var { Notif } = require('@/app/core/notif');
 //#endregion offlineImports

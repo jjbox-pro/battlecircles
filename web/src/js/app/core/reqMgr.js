@@ -170,7 +170,7 @@ ReqMgr.prototype.respWorker = function (resp, reqId) {
 
 ReqMgr.prototype.showAlert = function (text) {
 	if (text)
-		notifMgr.runEvent(Notif.ids.reqError, text);
+		Notif.sendNotif(Notif.ids.reqError, text);
 };
 
 ReqMgr.prototype.convertData = function () { };
@@ -199,5 +199,5 @@ module.exports = { ReqMgr, reqMgr };
 //#region offlineImports
 var { utils } = require('@/app/core/utils');
 var { tmplMgr } = require('@/app/core/tmplMgr');
-var { notifMgr, Notif } = require('@/app/core/notifMgr');
+var { Notif } = require('@/app/core/notif');
 //#endregion offlineImports

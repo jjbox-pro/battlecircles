@@ -18,7 +18,7 @@ class DOMMgr extends Manager {
 	initNotifListeners() {
 		super.initNotifListeners();
 
-		notifMgr.addListener(Notif.get('nf_onApplInited'), this.getNotifHandler(), {
+		Notif.addListener(Notif.get('nf_onApplInited'), this.getNotifHandler(), {
 			once: true,
 			cb: () => (this.app = new DOMComp_App()).show()
 		});
@@ -35,7 +35,7 @@ module.exports = { DOMMgr, domMgr }
 
 
 //#region offlineImports
-const { notifMgr, Notif } = require('@/app/core/notifMgr');
+const { Notif } = require('@/app/core/notif');
 
 const { DOMComp_App } = require('@/app/view/dom_comps/app');
 //#endregion offlineImports

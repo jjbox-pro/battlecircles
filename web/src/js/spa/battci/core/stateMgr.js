@@ -7,7 +7,7 @@ var { StateMgr } = require('@/app/core/stateMgr');
 StateMgr.prototype.initNotifListeners = function(){
 	StateMgr.super.initNotifListeners.apply(this, arguments);
 
-	notifMgr.addListener(Notif.ids.stateApplData, this.notifHandler, applData => {
+	Notif.addListener(Notif.ids.stateApplData, this.notifHandler, applData => {
 		Object.assign(this.__appl, applData);
 	});
 }
@@ -27,5 +27,5 @@ StateMgr.prototype.initPlatform = function () {
 
 
 //#region offlineImports
-var { notifMgr, Notif } = require('@/app/core/notifMgr');
+var { Notif } = require('@/app/core/notif');
 //#endregion offlineImports

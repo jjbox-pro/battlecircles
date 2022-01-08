@@ -78,7 +78,7 @@ WorkerMgr.prototype.onmessage = function (event) {
 WorkerMgr.prototype.onInit = function () {
 	this.setActive(true);
 
-	notifMgr.sendNotif(Notif.ids.applCompInited);
+	Notif.sendNotif(Notif.ids.applCompInited);
 };
 
 WorkerMgr.prototype.onInitError = function (e) {
@@ -87,7 +87,7 @@ WorkerMgr.prototype.onInitError = function (e) {
 
 	this.setActive(false);
 
-	notifMgr.runEvent(Notif.ids.applCompInited);
+	Notif.sendNotif(Notif.ids.applCompInited);
 };
 
 WorkerMgr.prototype.onUpdWorker = function (data) {
@@ -114,5 +114,5 @@ module.exports = { WorkerMgr, workerMgr };
 
 //#region offlineImports
 const { reqMgr } = require('@/app/core/reqMgr');
-const { notifMgr, Notif } = require('@/app/core/notifMgr');
+const { Notif } = require('@/app/core/notif');
 //#endregion offlineImports

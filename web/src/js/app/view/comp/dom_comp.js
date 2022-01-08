@@ -157,11 +157,11 @@ DOMComp.prototype.detachNotif = function () {
 };
 
 DOMComp.prototype.detachNotifElem = function (notif) {
-	notifMgr.removeListener(notif, this.notifHandler);
+	Notif.removeListener(notif, this.notifHandler);
 };
 
 DOMComp.prototype.detachNotifList = function (list) {
-	notifMgr.removeListeners(this.notifHandler, list);
+	Notif.removeListeners(this.notifHandler, list);
 };
 
 DOMComp.prototype.detachNotifOther = function () {
@@ -178,7 +178,7 @@ DOMComp.prototype.resetNotifHandler = function () {
 };
 
 DOMComp.prototype.getNotifHandler = function () {
-	return notifMgr.getHandler();
+	return Notif.getHandler();
 };
 
 DOMComp.prototype.attachNotif = function () {
@@ -188,14 +188,14 @@ DOMComp.prototype.attachNotif = function () {
 	let notif;
 
 	for (notif in this.notif.show)
-		notifMgr.addListener(this.notif.show[notif], this.notifHandler, this.show, this);
+		Notif.addListener(this.notif.show[notif], this.notifHandler, this.show, this);
 
 	// Разные
 	for (notif in this.notif.other) {
 		if (typeof (this.notif.other[notif]) === 'function')
-			notifMgr.addListener(+notif, this.notifHandler, this.notif.other[notif], this);
+			Notif.addListener(+notif, this.notifHandler, this.notif.other[notif], this);
 		else
-			notifMgr.addListener(this.notif.other[notif], this.notifHandler, null, this);
+			Notif.addListener(this.notif.other[notif], this.notifHandler, null, this);
 	}
 };
 
@@ -1153,7 +1153,7 @@ module.exports = { DOMComp };
 
 //#region offlineImports
 var { utils } = require('@/app/core/utils');
-var { notifMgr } = require('@/app/core/notifMgr');
+var { Notif } = require('@/app/core/notif');
 var { timeMgr } = require('@/app/core/timeMgr');
 var { tmplMgr } = require('@/app/core/tmplMgr');
 var { reqMgr } = require('@/app/core/reqMgr');

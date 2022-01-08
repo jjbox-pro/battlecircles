@@ -187,7 +187,7 @@ ScreenWnd.prototype.onTop = function(){
 		
 		this.checkConflicts();
 		
-		notifMgr.runEvent(Notif.ids.ifShown);
+		Notif.sendNotif(Notif.ids.ifShown);
 	}
 	else
 		this.checkConflicts(wndMgr.getSwipedWndList());
@@ -220,6 +220,6 @@ ScreenWnd.prototype.getPageConstructor = function(){
 
 
 //#region offlineImports
-var { notifMgr, Notif } = require('@/app/core/notifMgr');
+var { Notif } = require('@/app/core/notif');
 var { wndMgr } = require('@/app/core/wndMgr');
 //#endregion offlineImports

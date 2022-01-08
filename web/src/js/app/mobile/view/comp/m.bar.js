@@ -113,7 +113,7 @@ Bar.prototype.delete = function(){
 
     delete wndMgr.bars[this.getName()];
 
-    notifMgr.runEvent(Notif.ids.applResize);
+    Notif.sendNotif(Notif.ids.applResize);
 };
 
 
@@ -273,7 +273,7 @@ Bar.prototype.isWaitingAnimation = function(){return this.waitingAnimation;};
 Bar.prototype.isAnimating = function(){return this.animating;};
 
 Bar.prototype.onExpandStart = function(){
-    notifMgr.runEvent(Notif.ids.applResize);
+    Notif.sendNotif(Notif.ids.applResize);
 };
 
 Bar.prototype.onExpandEnd = function(){};
@@ -286,7 +286,7 @@ module.exports = {Bar};
 
 //#region offlineImports
 var { ls } = require('@/app/core/lsMgr');
-var { notifMgr, Notif } = require('@/app/core/notifMgr');
+var { Notif } = require('@/app/core/notif');
 var { tmplMgr } = require('@/app/core/tmplMgr');
 var { wndMgr } = require('@/app/core/wndMgr');
 //#endregion offlineImports

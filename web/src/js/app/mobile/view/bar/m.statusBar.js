@@ -75,13 +75,13 @@ bStatusBar_info.prototype.calcChildren = function () {
 bStatusBar_info.prototype.bindEvent = function () {
 	this.wrp
 		.on('click', '.info-fullScreen', function () {
-			notifMgr.runEvent(Notif.ids.applToggleFrame);
+			Notif.sendNotif(Notif.ids.applToggleFrame);
 		})
 		.on('click', '.info-bars', function () {
 			wndMgr.toggleBars(!ls.getLandscapeNoPanels());
 		})
 		.on('click', '.info-mute', function () {
-			notifMgr.runEvent(Notif.ids.sndStoreGlobalVolume, $(this).hasClass('-active') ? Snd.volume.min : Snd.volume.max);
+			Notif.sendNotif(Notif.ids.sndStoreGlobalVolume, $(this).hasClass('-active') ? Snd.volume.min : Snd.volume.max);
 		});
 };
 
@@ -126,7 +126,7 @@ module.exports = { StatusBar, bStatusBar_info, bStatusBar_towns };
 //#region offlineImports
 var { debug } = require('@/app/core/debug');
 var { ls } = require('@/app/core/lsMgr');
-var { notifMgr, Notif } = require('@/app/core/notifMgr');
+var { Notif } = require('@/app/core/notif');
 var { tmplMgr } = require('@/app/core/tmplMgr');
 var { wndMgr } = require('@/app/core/wndMgr');
 var { Snd } = require('@/app/core/snd');

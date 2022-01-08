@@ -75,12 +75,12 @@ Snd.prototype.init = function(){
 };
     
     Snd.prototype.initNotif = function(){
-        this.notifHandler = notifMgr.getHandler();
+        this.notifHandler = Notif.getHandler();
         
-        notifMgr.addListener(Notif.ids.sndGlobalVolume, this.notifHandler, this.onGlobalVolumeChanged, this);
-        notifMgr.addListener({id: Notif.ids.sndVolume, params: [this.constructor]}, this.notifHandler, this.onVolumeChanged, this);
-        notifMgr.addListener({id: Notif.ids.sndVolumeOn, params: [this.constructor]}, this.notifHandler, this.onVolumeOn, this);
-        notifMgr.addListener({id: Notif.ids.sndVolumeOff, params: [this.constructor]}, this.notifHandler, this.onVolumeOff, this);
+        Notif.addListener(Notif.ids.sndGlobalVolume, this.notifHandler, this.onGlobalVolumeChanged, this);
+        Notif.addListener({id: Notif.ids.sndVolume, params: [this.constructor]}, this.notifHandler, this.onVolumeChanged, this);
+        Notif.addListener({id: Notif.ids.sndVolumeOn, params: [this.constructor]}, this.notifHandler, this.onVolumeOn, this);
+        Notif.addListener({id: Notif.ids.sndVolumeOff, params: [this.constructor]}, this.notifHandler, this.onVolumeOff, this);
     };
     
 Snd.prototype.isInited = function(){
@@ -162,13 +162,13 @@ Snd.prototype.getVolume = function(){
 Snd.prototype.checkVolume = function(checkSndNodes){
     if( this.getVolume() ){
         if( !this.isActive() )
-            notifMgr.runEvent(Notif.ids.sndVolumeOn, [this.constructor]);
+            Notif.sendNotif(Notif.ids.sndVolumeOn, [this.constructor]);
         
         if( checkSndNodes )
             this.doSndNodes('updVolume');
     }
     else
-        notifMgr.runEvent(Notif.ids.sndVolumeOff, [this.constructor]);
+        Notif.sendNotif(Notif.ids.sndVolumeOff, [this.constructor]);
     
     return this;
 };
@@ -379,19 +379,19 @@ MusicSnd.prototype.onSndNodePlayReady = function(__threadId, sndNode) {
     
     this.setCurrentTrack(sndNode.getSndTrack());
     
-    notifMgr.runEvent(Notif.ids.sndBackChange, sndNode._sndTrack_.getName());
+    Notif.sendNotif(Notif.ids.sndBackChange, sndNode._sndTrack_.getName());
 };
 
 MusicSnd.prototype.onSndNodePause = function() {
     MusicSnd.superclass.onSndNodePause.apply(this, arguments);
     
-    notifMgr.runEvent(Notif.ids.sndBackChange, '--- paused ---');
+    Notif.sendNotif(Notif.ids.sndBackChange, '--- paused ---');
 };
 
 MusicSnd.prototype.onSndNodeStop = function() {
     MusicSnd.superclass.onSndNodeStop.apply(this, arguments);
 
-    notifMgr.runEvent(Notif.ids.sndBackChange, '');
+    Notif.sendNotif(Notif.ids.sndBackChange, '');
 };
 
 
@@ -685,7 +685,7 @@ EventSnd.prototype.init = function(){
     EventSnd.prototype.initNotif = function(){
         EventSnd.superclass.initNotif.apply(this, arguments);
         
-        notifMgr.addListener(Notif.ids.sndPlayEvent, this.notifHandler, function(trackOrEventId, notif, opt){
+        Notif.addListener(Notif.ids.sndPlayEvent, this.notifHandler, function(trackOrEventId, notif, opt){
             if( !this.getVolume() )
                 return;
             
@@ -703,7 +703,7 @@ EventSnd.prototype.init = function(){
             if( opt.callback )
                 opt.callback.call(opt.context, __dId);
         }, this);
-        notifMgr.addListener(Notif.ids.sndStopEvent, this.notifHandler, this.stop, this);
+        Notif.addListener(Notif.ids.sndStopEvent, this.notifHandler, this.stop, this);
     };
     
     EventSnd.prototype.bindEvents = function(){
@@ -713,52 +713,52 @@ EventSnd.prototype.init = function(){
         // Инициализируем события
         $(document)
             .on('mouseenter.eventSound', '.button1, .buttonBuildSlot, .mmenu-btn, .slotbld-switchBtn', function(){
-                notifMgr.runEvent(Notif.ids.sndPlayEvent, EventSnd.events.sysButtonEnter);
+                Notif.sendNotif(Notif.ids.sndPlayEvent, EventSnd.events.sysButtonEnter);
             })
             .on('mouseleave.eventSound', '.button1, .buttonBuildSlot, .mmenu-btn, .slotbld-switchBtn', function(){
-                notifMgr.runEvent(Notif.ids.sndPlayEvent, EventSnd.events.sysButtonLeave);
+                Notif.sendNotif(Notif.ids.sndPlayEvent, EventSnd.events.sysButtonLeave);
             })
             .on('click.eventSound', '.button1, .buttonBuildSlot, .mmenu-btn, .slotbld-switchBtn', function(){
-                notifMgr.runEvent(Notif.ids.sndPlayEvent, EventSnd.events.sysButtonClick);
+                Notif.sendNotif(Notif.ids.sndPlayEvent, EventSnd.events.sysButtonClick);
             })
             .on('mouseenter.eventSound', '.button2.-type-cancel', function(){
-                //notifMgr.runEvent(Notif.ids.sndPlayEvent, EventSnd.events.sysButtonCloseEnter);
+                //Notif.sendNotif(Notif.ids.sndPlayEvent, EventSnd.events.sysButtonCloseEnter);
             })
             .on('click.eventSound', '.button2.-type-cancel', function(){
-                notifMgr.runEvent(Notif.ids.sndPlayEvent, EventSnd.events.sysButtonCloseClick);
+                Notif.sendNotif(Notif.ids.sndPlayEvent, EventSnd.events.sysButtonCloseClick);
             })
             .on('mouseenter.eventSound', '.link', function(){
-                notifMgr.runEvent(Notif.ids.sndPlayEvent, EventSnd.events.sysTextLinkEnter);
+                Notif.sendNotif(Notif.ids.sndPlayEvent, EventSnd.events.sysTextLinkEnter);
             })
             .on('click.eventSound', '.link', function(){
-                notifMgr.runEvent(Notif.ids.sndPlayEvent, EventSnd.events.sysTextLinkClick);
+                Notif.sendNotif(Notif.ids.sndPlayEvent, EventSnd.events.sysTextLinkClick);
             })
             .on('click.eventSound', 'input:checkbox', function(){
-                notifMgr.runEvent(Notif.ids.sndPlayEvent, EventSnd.events.sysCheckboxClick);
+                Notif.sendNotif(Notif.ids.sndPlayEvent, EventSnd.events.sysCheckboxClick);
             })
             .on('click.eventSound', 'input:radio', function(){
-                notifMgr.runEvent(Notif.ids.sndPlayEvent, EventSnd.events.sysRadioClick);
+                Notif.sendNotif(Notif.ids.sndPlayEvent, EventSnd.events.sysRadioClick);
             })
             .on('click.eventSound', 'select, .mmenu-towns', function(){
-                notifMgr.runEvent(Notif.ids.sndPlayEvent, EventSnd.events.sysSelectClick);
+                Notif.sendNotif(Notif.ids.sndPlayEvent, EventSnd.events.sysSelectClick);
             })
             .on('mouseenter.eventSound', '.mmenu-towns li', function(){
-                notifMgr.runEvent(Notif.ids.sndPlayEvent, EventSnd.events.sysSelectOptionEnter);
+                Notif.sendNotif(Notif.ids.sndPlayEvent, EventSnd.events.sysSelectOptionEnter);
             })
             .on('change.eventSound', 'select', function(){
-                notifMgr.runEvent(Notif.ids.sndPlayEvent, EventSnd.events.sysSelectOptionChange);
+                Notif.sendNotif(Notif.ids.sndPlayEvent, EventSnd.events.sysSelectOptionChange);
             })
             .on('mouseenter.eventSound', '.helpIcon', function(){
-                notifMgr.runEvent(Notif.ids.sndPlayEvent, EventSnd.events.sysQuestionEnter);
+                Notif.sendNotif(Notif.ids.sndPlayEvent, EventSnd.events.sysQuestionEnter);
             })
             .on('mouseenter.eventSound', '.mmenu-luck', function(){
-                notifMgr.runEvent(Notif.ids.sndPlayEvent, EventSnd.events.sysLuckEnter);
+                Notif.sendNotif(Notif.ids.sndPlayEvent, EventSnd.events.sysLuckEnter);
             })
             .on('click.eventSound', '.mmenu-luck', function(){
-                notifMgr.runEvent(Notif.ids.sndPlayEvent, EventSnd.events.sysLuckClick);
+                Notif.sendNotif(Notif.ids.sndPlayEvent, EventSnd.events.sysLuckClick);
             })
             .on('mouseleave.eventSound', '.mmenu-luck', function(){
-                notifMgr.runEvent(Notif.ids.sndPlayEvent, EventSnd.events.sysLuckLeave);
+                Notif.sendNotif(Notif.ids.sndPlayEvent, EventSnd.events.sysLuckLeave);
             });
             
         this.eventsBinded = true;
@@ -837,7 +837,7 @@ module.exports = {Snd, MusicSnd, AmbientSnd, NoiseSnd, EventSnd, SndNode};
 var { debug } = require('@/app/core/debug');
 var { wofh } = require('@/app/core/stateMgr');
 var { ls } = require('@/app/core/lsMgr');
-var { notifMgr, Notif } = require('@/app/core/notifMgr');
+var { Notif } = require('@/app/core/notif');
 var { sndMgr } = require('@/app/core/sndMgr');
 
 var { Track } = require('@/app/class/c.track');

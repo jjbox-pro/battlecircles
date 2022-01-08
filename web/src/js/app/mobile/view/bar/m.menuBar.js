@@ -232,7 +232,7 @@ bShortMainMenu.prototype.addNotif = function(){
         
         this.show();
         
-        notifMgr.runEvent(Notif.ids.applResize);
+        Notif.sendNotif(Notif.ids.applResize);
     };
     
     this.notif.other[Notif.ids.accQuests].params = [Quest.ids.map];
@@ -362,7 +362,7 @@ module.exports = { MenuBar };
 //#region offlineImports
 var { wofh } = require('@/app/core/stateMgr');
 var { ls } = require('@/app/core/lsMgr');
-var { notifMgr, Notif } = require('@/app/core/notifMgr');
+var { Notif } = require('@/app/core/notif');
 var { tmplMgr } = require('@/app/core/tmplMgr');
 var { wndMgr } = require('@/app/core//wndMgr');
 

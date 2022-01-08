@@ -8,7 +8,7 @@ class ApplBase{
     }
 
     initNotifListeners() {
-        this.notifHandler = notifMgr.getHandler();
+        this.notifHandler = Notif.getHandler();
     }
 
     initComponents() {
@@ -40,7 +40,7 @@ class ApplBase{
     
         //[].slice.call(document.documentElement.getElementsByTagName('script')||[]).forEach($script=>$script.remove());
     
-        notifMgr.sendNotif(Notif.ids.nf_onApplInited);
+        Notif.sendNotif(Notif.ids.nf_onApplInited);
     }
 
 
@@ -68,7 +68,7 @@ module.exports = { ApplBase };
 
 
 //#region offlineImports
-const { notifMgr, Notif } = require('@/app/core/notifMgr');
+const { Notif } = require('@/app/core/notif');
 const { tmplMgr } = require('@/app/core/tmplMgr');
 
 const { domMgr } = require('@/app/core/domMgr');

@@ -12,7 +12,7 @@ class Manager {
     }
 
     initNotifListeners() {
-        this.notifHandler = notifMgr.getHandler();
+        this.notifHandler = Notif.getHandler();
     }
 
     getNotifHandler() {
@@ -27,5 +27,5 @@ module.exports = { Manager }
 
 
 //#region offlineImports
-const { notifMgr } = require('@/app/core/notifMgr');
+const { Notif } = require('@/app/core/notif');
 //#endregion offlineImports

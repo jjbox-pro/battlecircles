@@ -415,7 +415,7 @@ module.exports = {NavBar};
 
 
 //#region offlineImports
-var { Notif } = require('@/app/core/notifMgr');
+var { Notif } = require('@/app/core/notif');
 var { tmplMgr } = require('@/app/core/tmplMgr');
 var { wndMgr } = require('@/app/core/wndMgr');
 

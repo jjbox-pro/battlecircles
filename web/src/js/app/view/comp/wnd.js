@@ -393,7 +393,7 @@ Wnd.prototype.minimize = function($el){
 Wnd.prototype.onEndMinimize = function(){};
 
 Wnd.prototype.playSound = function(event){
-	notifMgr.runEvent(Notif.ids.sndPlayEvent, event);
+	Notif.sendNotif(Notif.ids.sndPlayEvent, event);
 };
 
 Wnd.prototype.getCloseSound = function(){};
@@ -992,7 +992,7 @@ module.exports = {
 
 //#region offlineImports
 var { ls } = require('@/app/core/lsMgr');
-var { notifMgr, Notif } = require('@/app/core/notifMgr');
+var { Notif } = require('@/app/core/notif');
 var { snip } = require('@/app/core/snipet');
 var { tmplMgr } = require('@/app/core/tmplMgr');
 var { wndMgr } = require('@/app/core/wndMgr');

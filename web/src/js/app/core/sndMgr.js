@@ -29,17 +29,17 @@ SndMgr.prototype.init = function () {
 	this.setGlobalVolume();
 
 	if (this.isSndContexAvail())
-		notifMgr.runEvent(Notif.ids.sndInitSources);
+		Notif.sendNotif(Notif.ids.sndInitSources);
 	else
 		$(document).one('click', function () {
-			notifMgr.runEvent(Notif.ids.sndInitSources);
+			Notif.sendNotif(Notif.ids.sndInitSources);
 		});
 
 	return this;
 };
 
 SndMgr.prototype.initNotifListeners = function () {
-	notifMgr
+	Notif
 		.addListener({ id: Notif.ids.sndInitSources, once: true }, 'sound', function () {
 			this.initSoundSources();
 		}, this)
@@ -155,7 +155,7 @@ SndMgr.prototype.setGlobalVolume = function (val) {
 
 	Howler.volume(val);
 
-	notifMgr.runEvent(Notif.ids.sndGlobalVolume);
+	Notif.sendNotif(Notif.ids.sndGlobalVolume);
 };
 
 SndMgr.prototype.getGlobalVolume = function () {
@@ -190,6 +190,6 @@ module.exports = { SndMgr, sndMgr };
 
 //#region offlineImports
 var { ls } = require('@/app/core/lsMgr');
-var { notifMgr, Notif } = require('@/app/core/notifMgr');
+var { Notif } = require('@/app/core/notif');
 var { AmbientSnd, EventSnd, MusicSnd, NoiseSnd, Snd } = require('@/app/core/snd');
 //#endregion offlineImports

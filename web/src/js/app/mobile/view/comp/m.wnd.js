@@ -920,7 +920,7 @@ ScreenWnd.prototype.afterDataReceived = function(){
 };
 
 ScreenWnd.prototype.onSwipe = function(opt){
-	notifMgr.runEvent(Notif.ids.mobAppScreenSwipe, {
+	Notif.sendNotif(Notif.ids.mobAppScreenSwipe, {
         screen: this,
         swipeOpt: opt
     });
@@ -942,7 +942,7 @@ ScreenWnd.prototype.onTop = function(){
 		
 		this.checkConflicts();
 		
-		notifMgr.runEvent(Notif.ids.ifShown);
+		Notif.sendNotif(Notif.ids.ifShown);
 	}
 };
 
@@ -1059,6 +1059,6 @@ module.exports = {OriginWnd, ScreenWnd, InfScreenWnd};
 //#region offlineImports
 var { snip } = require('@/app/core/snipet');
 var { tmplMgr } = require('@/app/core/tmplMgr');
-var { notifMgr, Notif } = require('@/app/core/notifMgr');
+var { Notif } = require('@/app/core/notif');
 var { wndMgr } = require('@/app/core/wndMgr');
 //#endregion offlineImports

@@ -222,11 +222,11 @@ module.exports = { Block };
 // 	};
 	
 // 	Block.prototype.detachNotifElem = function (notif) {
-// 		notifMgr.removeListener(notif, this.notifHandler);
+// 		Notif.removeListener(notif, this.notifHandler);
 // 	};
 	
 // 	Block.prototype.detachNotifList = function (list) {
-// 		notifMgr.removeListeners(this.notifHandler, list);
+// 		Notif.removeListeners(this.notifHandler, list);
 // 	};
 	
 // 	Block.prototype.detachNotifOther = function () {
@@ -243,7 +243,7 @@ module.exports = { Block };
 // 	};
 	
 // 	Block.prototype.getNotifHandler = function () {
-// 		return notifMgr.getHandler();
+// 		return Notif.getHandler();
 // 	};
 	
 // 	Block.prototype.attachNotif = function () {
@@ -251,17 +251,17 @@ module.exports = { Block };
 // 			return;
 	
 // 		for (var notif in this.notif.show)
-// 			notifMgr.addListener(this.notif.show[notif], this.notifHandler, this.show, this);
+// 			Notif.addListener(this.notif.show[notif], this.notifHandler, this.show, this);
 	
 // 		// Разные
 // 		for (var notif in this.notif.other) {
 // 			if (typeof (this.notif.other[notif]) === 'function') {
-// 				notifMgr.addListener(notif, this.notifHandler, this.notif.other[notif], this);
+// 				Notif.addListener(notif, this.notifHandler, this.notif.other[notif], this);
 	
 // 				continue;
 // 			}
 	
-// 			notifMgr.addListener(this.notif.other[notif], this.notifHandler, null, this);
+// 			Notif.addListener(this.notif.other[notif], this.notifHandler, null, this);
 // 		}
 // 	};
 	
@@ -1216,7 +1216,7 @@ module.exports = { Block };
 	
 // 	//#region offlineImports
 // 	var { utils } = require('@/app/core/utils');
-// 	var { notifMgr } = require('@/app/core/notifMgr');
+// 	var { Notif } = require('@/app/core/notif');
 // 	var { timeMgr } = require('@/app/core/timeMgr');
 // 	var { tmplMgr } = require('@/app/core/tmplMgr');
 // 	var { reqMgr } = require('@/app/core/reqMgr');
