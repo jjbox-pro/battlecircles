@@ -30,7 +30,7 @@
 		"wofh-builder-tmpl": "^2.0.18"
 	},
 	"scripts": {
-		"build": "(npm run gulp:build && npm run wofh:processing && npm run wofh:copy:html && npm run webpack:build && npm run wofh:postprocessing) & npm run timer",
+		"build": "(npm run gulp:build && npm run wofh:processing && npm run wofh:copy:html && npm run webpack:build && npm run wofh:postprocessing && npm run electron:watch) & npm run timer",
 		"gulp:build": "npx gulp",
 		"webpack:build": "npx webpack",
 		"wofh:processing": "node ./scripts/wofh-processing.cjs",
