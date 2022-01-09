@@ -1,10 +1,11 @@
 class Scene {
     constructor(width, height) {
-        this.width = width || globalThis.innerWidth;
-        this.height = height || globalThis.innerHeight;
+        this.setSize(width, height);
     }
 
     init() {
+        this.initNotifListeners();
+
         this.$canvas = $('<canvas>');
 
         this.$canvas.addClass('canvas');
@@ -17,6 +18,23 @@ class Scene {
         this.resize();
 
         return this;
+    }
+
+    initNotifListeners() {
+        this.notifHandler = Notif.getHandler();
+
+        Notif.addListener(Notif.get('nf_onAppResize'), this.notifHandler, (size) => {
+            this.setSize(size.width, size.height);
+
+            this.resize();
+
+            Notif.sendNotif(Notif.ids.nf_onSceneResize);
+        });
+    }
+
+    setSize(width, height){
+        this.width = width || globalThis.innerWidth;
+        this.height = height || globalThis.innerHeight;
     }
 
     resize() {
@@ -36,7 +54,7 @@ class Scene {
         return this.canvasCtx;
     }
 
-    getCanvas(){
+    getCanvas() {
         return this.$canvas;
     }
 }
@@ -48,6 +66,8 @@ module.exports = { Scene }
 
 
 //#region offlineImports
+const { Notif } = require('@/app/core/notif')
+
 const { Vector2D } = require('@/app/modules/math/vector2D');
 //#endregion offlineImports
 
