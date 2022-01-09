@@ -97,7 +97,11 @@ function createWindow() {
 
 	mainWindow.on('closed', () => { mainWindow = null });
 
-	setTimeout(() => mainWindow.maximize(), 100);
+	setTimeout(() => {
+		mainWindow.maximize();
+
+		onWindowShown();
+	}, 100);
 
 	appMethods.loadURL(entryPoint, appData.getParams);
 };
