@@ -38,7 +38,8 @@
 			"error",
 			{
 				"variables": false,
-				"functions": false
+				"functions": false,
+				"classes": false
 			}
 		]
 	},
