@@ -32,9 +32,24 @@ class ApplBase{
     }
 
     finishInit() {
+        this.bindEvents();
+
         this.onInited();
     }
     
+    bindEvents() {
+        window.onresize = () => {
+            this.onResize();
+        };
+    }
+
+    onResize(){
+        Notif.sendNotif(Notif.ids.nf_onAppResize, {
+            width: globalThis.innerWidth,
+            height: globalThis.innerHeight
+        });
+    }
+
     onInited() {
         this.inited = true;
     
