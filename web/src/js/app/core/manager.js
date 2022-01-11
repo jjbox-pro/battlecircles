@@ -3,7 +3,7 @@ class Manager {
         return Object.getPrototypeOf(this).prototype;
     }
 
-    constructor() { }
+    constructor(...args) { }
 
     init() {
         this.initNotifListeners();
