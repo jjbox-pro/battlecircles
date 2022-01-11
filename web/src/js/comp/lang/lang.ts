@@ -4,7 +4,7 @@ let _lang: string = '', _text: any = {};
 
 const _cache: any = {}, _registry: Array<Function> = [];
 
-const lg = (() => {
+export const lg = (() => {
 	let i: number, tag: string | string[], result: string;
 
 	function lg(): string {
@@ -98,7 +98,3 @@ const lg = (() => {
 
 	_text = { language: [_lang = lang] };
 })();
-
-
-
-module.exports = lg;

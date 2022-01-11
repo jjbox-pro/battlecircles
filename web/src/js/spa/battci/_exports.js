@@ -1,5 +1,7 @@
 const e = Object.assign||function(me, m){for(var k in m)me[k] = m[k];}
 
+e(module.exports, require('@/app/core/wndMgr'));
+
 e(module.exports, require('@/app/core/tmplMgr'));
 
 e(module.exports, require('@/app/core/domMgr'));

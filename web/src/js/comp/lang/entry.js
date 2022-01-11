@@ -1,1 +1,1 @@
-module.exports = require('@/comp/lang/lang');
+module.exports = require('@/comp/lang/lang').lg;
