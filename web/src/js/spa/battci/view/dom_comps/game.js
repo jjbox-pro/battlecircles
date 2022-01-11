@@ -27,6 +27,10 @@ class DOMComp_Game extends DOMComp {
 		$cont.append(this.scene.getCanvas().addClass('game__canvas'));
 	}
 
+	cacheCont($cont){
+		this.$game__canvas = $cont.find('game__canvas');
+	}
+
 	bindEvents(){
 		this.keys = {};
 
@@ -58,6 +62,8 @@ class DOMComp_Game extends DOMComp {
 		this.game.init();
 
 		this.startLoop();
+
+		this.$game__canvas.focus();
 	}
 
 	process() {
@@ -100,8 +106,6 @@ class DOMComp_Game extends DOMComp {
 			if (processCount > 5)
 				processCount = 5;
 
-			console.log(processCount);
-
 			//while( --processCount > 0 ){
 				this.process();
 
@@ -116,7 +120,7 @@ class DOMComp_Game extends DOMComp {
 			if (timeNow - this.timeFrame > timeMgr.StMS) {
 				this.timeFrame = timeNow;
 
-				Notif.sendNotif(Notif.ids.fps, this.frames);
+				Notif.sendNotif(Notif.ids.nf_fps, this.frames);
 
 				this.frames = 0;
 			}
