@@ -1,2 +1,5 @@
 <*language>en
 <*gamename>Battle circles
+
+<*ammo-person>Player's ammo
+<*ammo-weapon>Weapon's ammo

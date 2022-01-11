@@ -1,2 +1,5 @@
 <*language>ru
 <*gamename>Боевые круги
+
+<*ammo-person>Патроны игрока
+<*ammo-weapon>Патроны оружия
