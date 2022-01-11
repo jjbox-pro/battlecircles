@@ -17,7 +17,17 @@ class GameObject {
 		this.init();
 	}
 
-	init() { }
+	init() { 
+		this.initNotifListeners();
+	}
+
+	initNotifListeners() {
+		this.notifHandler = Notif.getHandler();
+	}
+
+	getName(){
+		return this.constructor.name;
+	}
 
 	beforeProcess(scene) {
 		this.checkCollisions();
@@ -27,7 +37,6 @@ class GameObject {
 		this.beforeProcess(scene);
 
 		this.afterProcess(scene);
-
 	}
 
 	afterProcess(scene) {
@@ -146,8 +155,8 @@ class GoView extends GameObject {
 		super(...arguments);
 	}
 
-	init(scene) {
-		this.initNotifListeners();
+	init() {
+		super.init(...arguments);
 
 		this.canvasMaskTag = document.createElement('canvas');
 		this.canvasMaskCtx = this.canvasMaskTag.getContext('2d');
@@ -161,7 +170,7 @@ class GoView extends GameObject {
 	}
 
 	initNotifListeners() {
-		this.notifHandler = Notif.getHandler();
+		super.initNotifListeners(...arguments);
 
 		Notif.addListener(Notif.get('nf_onSceneResize'), this.notifHandler, this.resize, this);
 	}
@@ -237,27 +246,9 @@ class Background extends GameObject {
 		super(...arguments);
 	}
 
-	init(scene) {
-		this.initNotifListeners();
+	init() { }
 
-		this.resize();
-
-		this.res = this.game.resList.background;
-	}
-
-	initNotifListeners() {
-		this.notifHandler = Notif.getHandler();
-
-		Notif.addListener(Notif.get('nf_onSceneResize'), this.notifHandler, this.resize, this);
-	}
-
-	resize() {
-
-	}
-
-	process(scene) {
-
-	}
+	process() { }
 
 	draw(scene) {
 		scene.getCanvas().css('background-position', this.game.camera.pos.x + 'px ' + this.game.camera.pos.y + 'px');

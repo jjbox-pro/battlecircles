@@ -26,6 +26,10 @@ class Weapon extends GameObject{
 		this.power = 15;
 
 		this.res = this.game.resList.gun;
+
+		this.setAmmo(15);
+
+		this.maxAmmo = 30;
 	}
 	
 	process(scene, processParent){
@@ -103,7 +107,6 @@ class Weapon extends GameObject{
 			this.shooting = false;
 		}
 		
-		
 	//	if( scene.mouse.down )
 	//		this.readyToShoot = true;
 	//	else if( this.readyToShoot ){
@@ -153,18 +156,25 @@ class Weapon extends GameObject{
 	}
 	
 	shoot(){
-		this.parentOffset.x = 2 + utils.random(5);
-		
-		if( utils.random(11) < 3 )
-			this.parent.pos.addVector(this.parent.lookDir.getMultScalar(-2));
-		
-		this.game.addGameObject(Bullet, {
-			pos: this.lookDir.getMultScalar(this.width*0.5).addVector(this.pos), // Стартовая позиция пули (от начала ружья)
-			moveDir: this.lookDir.clone(), // Направление полета
-			range: (this.aimDist-this.width*0.5)||0,
-			listCollisions: this.game.getObjectListByCls(Enemy),
-			weaponPower: this.power
-		});
+		if( this.ammo > 0 ){
+			this.setAmmo(this.ammo - 1);
+
+			this.parentOffset.x = 2 + utils.random(5);
+			
+			if( utils.random(11) < 3 )
+				this.parent.pos.addVector(this.parent.lookDir.getMultScalar(-2));
+			
+			this.game.addGameObject(Bullet, {
+				pos: this.lookDir.getMultScalar(this.width*0.5).addVector(this.pos), // Стартовая позиция пули (от начала ружья)
+				moveDir: this.lookDir.clone(), // Направление полета
+				range: (this.aimDist-this.width*0.5)||0,
+				listCollisions: this.game.getObjectListByCls(Enemy),
+				weaponPower: this.power
+			});
+		}
+		else
+			this.game.resList.noammo.snd.play();
+			
 		
 		this.shootingTimeout = setTimeout(this.shoot.bind(this), 100 + utils.random(200));
 	}
@@ -183,6 +193,92 @@ class Weapon extends GameObject{
 	
 	getCollideRight(){
 		return this.pos.x;
+	}
+
+	addAmmo(){
+		const ammo = Math.min(this.ammo + this.parent.takeAmmo(this.maxAmmo - this.ammo), this.maxAmmo);
+
+		if( ammo === this.ammo )
+			return;
+
+		this.setAmmo(ammo);
+
+		this.game.resList.reload.snd.play();
+	}
+
+	setAmmo(count){
+		this.ammo = count;
+
+		Notif.sendNotif(Notif.ids.nf_ammo, {
+			type: 'weapon',
+			index: this.index,
+			count: this.ammo
+		});
+
+		return this;
+	}
+}
+
+
+
+class Magazine extends GameObject{
+	constructor(){
+		super(...arguments);
+	}
+
+	init(scene){
+		this.count = 20 + utils.random(30);
+
+		this.type = Bullet;
+
+		this.res = this.game.resList.magazine;
+
+		this.width = this.res.sWidth;
+		this.height = this.res.sHeight;
+	}
+
+	draw(scene){
+		this.beforeDraw(scene);
+		
+		scene.getContext().translate(this.pos.x, this.pos.y);
+		
+		scene.getContext().drawImage(
+			this.res.img, 
+			0, 
+			0, 
+			this.res.sWidth, 
+			this.res.sHeight, 
+			-this.width*0.5,
+			-this.height*0.5,
+			this.width, 
+			this.height
+		);
+		
+		this.afterDraw(scene);
+	}
+
+	getCollideTop(){
+		return this.pos.y;
+	}
+	
+	getCollideBottom(){
+		return this.pos.y;
+	}
+	
+	getCollideLeft(){
+		return this.pos.x;
+	}
+	
+	getCollideRight(){
+		return this.pos.x;
+	}
+
+	collide(person){
+		this.free();
+
+		this.game.resList.catchup.snd.play();
+
+		person.addAmmo(this.count, this.type);
 	}
 }
 
@@ -228,16 +324,16 @@ class Bullet extends Ammo{
 			
 			snd = false;
 			
-			for(snd in res.queue){
-				if( res.queue[snd].paused ){
-					snd = res.queue[snd];
+			for(let index in res.queue){
+				if( res.queue[index].paused ){
+					snd = res.queue[index];
 					
 					break;
 				}
 			}
 			
-			if( !(snd instanceof Audio) ){
-				snd = new Audio(res.src);
+			if( snd === false ){
+				snd = res.create(res.src);
 				
 				res.queue.push(snd);
 			}
@@ -276,8 +372,10 @@ class Bullet extends Ammo{
 		
 		scene.getContext().beginPath();
 		
-		var tail = this.moveDir.getMultScalar(-this.tailWidth).addVector(this.pos);
+		const tail = this.moveDir.getMultScalar(-this.tailWidth).addVector(this.pos);
 		
+		scene.getContext().lineWidth = 2;
+
 		scene.getContext().moveTo(this.pos.x, this.pos.y);
 		scene.getContext().lineTo(tail.x, tail.y);
 		
@@ -307,12 +405,13 @@ class Bullet extends Ammo{
 
 
 
-module.exports = {Weapon, Ammo, Bullet};
+module.exports = {Weapon, Ammo, Bullet, Magazine};
 
 
 
 //#region offlineImports
 const { utils } = require('@/app/core/utils');
+const { Notif } = require('@/app/core/notif');
 
 const { Vector2D } = require('@/app/modules/math/vector2D');
 

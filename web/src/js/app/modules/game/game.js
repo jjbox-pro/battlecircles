@@ -22,6 +22,14 @@ class Game{
                 sHeight: 96,
                 loaded: false
             },
+            magazine: {
+                type: 'img',
+                img: new Image(),
+                src: _url_.img('/magazine.png'),
+                sWidth: 44,
+                sHeight: 40,
+                loaded: false
+            },
             view: {
                 type: 'img',
                 img: new Image(),
@@ -30,26 +38,56 @@ class Game{
                 sHeight: 1000,
                 loaded: false
             },
-            background: {
-                type: 'img',
-                img: new Image(),
-                src: _url_.img('/background.png'),
-                sWidth: 248,
-                sHeight: 248,
-                loaded: false
-            },
-            shot: {
-                type: 'snd',
-                snd: new Audio(),
-                src: _url_.snd('/shot.mp3'),
-                loaded: false
-            },
+            shot: (()=>{
+                const resource = {
+                    type: 'snd',
+                    src: _url_.snd('/shot.mp3'),
+                    loaded: false
+                };
+
+                resource.create = (...args) => {
+                    const audio = new Audio(args);
+                    
+                    audio.volume = 0.3;
+
+                    return audio;
+                }
+
+                resource.snd = resource.create();
+
+                return resource;
+            })(),
             reload: {
                 type: 'snd',
                 snd: new Audio(),
                 src: _url_.snd('/reload.mp3'),
                 loaded: false
-            }
+            },
+            noammo: {
+                type: 'snd',
+                snd: new Audio(),
+                src: _url_.snd('/noammo.mp3'),
+                loaded: false
+            },
+            catchup: {
+                type: 'snd',
+                snd: new Audio(),
+                src: _url_.snd('/catchup.mp3'),
+                loaded: false
+            },
+            moving: {
+                type: 'snd',
+                snd: (() => {
+                    const audio = new Audio();
+
+                    audio.loop = true;
+                    audio.volume = 0.3;
+
+                    return audio;
+                })(),
+                src: _url_.snd('/moving.mp3'),
+                loaded: false
+            },
         };
         
         for(var res in this.resList ){
@@ -109,26 +147,34 @@ class Game{
     
     
     initGameObjectsList(){
-        var weapons = [];
+        const personCollisions = [];
         
         this.camera = new GameObject();
         
         this.addGameObject(Background);
 
-        for(var i = 0; i < 10; i++){
+        for(let i = 0; i < 10; i++){
             this.addGameObject(Enemy, {pos: new Vector2D(100 + utils.random(400), 100 + utils.random(400))});
         }
-        
-        weapons.push(this.addGameObject(Weapon, {pos: new Vector2D(20, 40)}));
-        weapons.push(this.addGameObject(Weapon, {pos: new Vector2D(20, 340)}));
-        weapons.push(this.addGameObject(Weapon, {pos: new Vector2D(350, 80)}));
+
+        personCollisions.push(this.addGameObject(Weapon, {pos: new Vector2D(20, 40)}));
+        personCollisions.push(this.addGameObject(Weapon, {pos: new Vector2D(20, 340)}));
         
         this.person = this.addGameObject(Person);
-        this.person.setListCollisions(weapons);
+        this.person.setListCollisions(personCollisions);
         
+        for(let i = 0; i < 5; i++){
+            this.addGameObject(Magazine, {
+                pos: new Vector2D(150 + utils.random(500), 150 + utils.random(500)),
+                listCollisions: [this.person]
+            });
+        }
+
         this.aim = this.addGameObject(Aim);
         
         this.addGameObject(GoView);
+
+        
     }
     
     addGameObject(gameObject, opt){
@@ -169,7 +215,7 @@ const { Vector2D } = require('@/app/modules/math/vector2D');
 
 const { GameObject, GameObjectMgr, GoView, Background } = require('@/app/modules/game/objects/object');
 const { Enemy } = require('@/app/modules/game/objects/object.entity');
-const { Weapon } = require('@/app/modules/game/objects/object.weapon');
+const { Weapon, Magazine } = require('@/app/modules/game/objects/object.weapon');
 const { Aim } = require('@/app/modules/game/objects/object.aim');
 const { Person } = require('@/app/modules/game/objects/object.entity.person');
 //#endregion offlineImports
