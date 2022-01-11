@@ -3,3 +3,7 @@
 
 <*ammo-person>Player's ammo
 <*ammo-weapon>Weapon's ammo
+
+<*ammo-actions-fireDir>Kyes 1 & 2|fire diraction
+<*ammo-actions-reload>Key R|reload
+<*ammo-actions-reload>Key Shift|speed up

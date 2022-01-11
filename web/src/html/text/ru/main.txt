@@ -3,3 +3,7 @@
 
 <*ammo-person>Патроны игрока
 <*ammo-weapon>Патроны оружия
+
+<*ammo-actions-fireDir>Клавиши 1 и 2|направление огня
+<*ammo-actions-reload>Клавиша R|перезарядка
+<*ammo-actions-reload>Клавиша Shift|ускорение
