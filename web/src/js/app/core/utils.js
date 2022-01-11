@@ -7,7 +7,7 @@ Utils.C_EPSILON1000 = Utils.C_EPSILON * 1000;
 
 Utils.prototype.loadScript = function (url, opt) {
 	opt = opt || {};
-
+	
 	var script = document.createElement('script'),
 		cb = opt.cb||opt.callback;
 
