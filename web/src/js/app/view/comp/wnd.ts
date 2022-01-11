@@ -5,7 +5,9 @@
 
 
 export class Wnd {
-	constructor() { }
+	public id: number = 0;
+
+	constructor(){}
 }
 
 

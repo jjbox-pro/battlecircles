@@ -12,16 +12,14 @@ export class WndMgr extends Manager {
 		super(...args);
 	}
 
-	push(val: Wnd){
-		this.list.push(Wnd);
+	push(wnd: Wnd){
+		this.list.push(wnd);
 	}
 }
 
 
 export const wndMgr = new WndMgr();
 
-
-wndMgr.push();
 
 
 //module.exports = { WndMgr, wndMgr }
