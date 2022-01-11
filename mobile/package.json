@@ -41,6 +41,6 @@
 		"build:dist": "npx gulp && npm run wofh:processing",
 		"wofh:processing": "node ./scripts/wofh-processing.cjs",
 		"cordova:requirements": "npx cordova requirements",
-		"postinstall": "node ./scripts/project-symlink.cjs"
+		"postinstall": "node ./scripts/project-symlink.cjs && npm run cordova:requirements"
 	}
 }
