@@ -5,14 +5,19 @@ let _lang: string = '', _text: any = {};
 const _cache: any = {}, _registry: Array<Function> = [];
 
 export const lg = (() => {
-	let i: number, tag: string | string[], result: string;
+	let i: number, tag: any, tagRaw: any, result: string;
 
 	function lg(): string {
 		result = '';
 
 		for (i = 0; i < arguments.length; i++) {
-			tag = arguments[i].split('/');
-			tag = _text[tag[0]][tag[1] || 0];
+			tagRaw = arguments[i].split('/');
+			tag = _text[tagRaw[0]];
+
+			if( tag )
+				tag = tag[tagRaw[1] || 0];
+			else
+				tag = tagRaw;
 
 			if (tag === undefined) {
 				//console['print']('%c --> Empty text tag: ' + arguments[i], 'color: pink');
