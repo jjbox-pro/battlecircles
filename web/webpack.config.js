@@ -235,8 +235,17 @@ module.exports = {
 											chrome: "39"
 										}
 									}
-								],
-								"@babel/preset-typescript"
+								]
+								// ,
+								// [
+								// 	"@babel/preset-typescript",
+								// 	{
+								// 		// Ensure that .d.ts files are created by tsc, but not .js files
+								// 		"declaration": true,
+								// 		// Ensure that Babel can safely transpile files in the TypeScript project
+								// 		"isolatedModules": true
+								// 	}
+								// ]
 							],
 							compact: false, // If true, all optional newlines and whitespace will be omitted if file size more than 500kb.
 							cacheCompression: false,
@@ -244,6 +253,11 @@ module.exports = {
 						}
 					}
 				});
+
+				rules.push({ 
+					test: /\.tsx?$/, 
+					loader: "ts-loader" 
+				})
 			}
 
 			return rules;
