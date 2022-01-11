@@ -11,7 +11,8 @@ class GameObject {
 			width: 10,
 			height: 10,
 			childList: {},
-			listCollisions: []
+			listCollisions: [],
+			zIndex: 0
 		}, data);
 
 		this.init();

@@ -102,7 +102,7 @@ class Game{
             resCls.src = res.src; 
         }
         
-        this.gameObjectsList = {};
+        this.gameObjectsList = [];
         
         this.gameObjectMgr = new GameObjectMgr(this);
         
@@ -128,7 +128,16 @@ class Game{
         
         this.scene.getContext().translate(this.camera.pos.x, this.camera.pos.y);
         
-        for(var gameObject in this.gameObjectsList){
+        if( this.gameObjectsCount !== this.gameObjectsList.length ){
+            this.gameObjectsList.sort((a, b) => {
+                return a.zIndex - b.zIndex;
+            });
+
+            this.gameObjectsCount = this.gameObjectsList.length;
+        }
+
+        let gameObject;
+        for(gameObject in this.gameObjectsList){
             gameObject = this.gameObjectsList[gameObject];
             
             if( gameObject.inView(this.scene) )
@@ -153,38 +162,59 @@ class Game{
         
         this.addGameObject(Background);
 
-        for(let i = 0; i < 10; i++){
-            this.addGameObject(Enemy, {pos: new Vector2D(100 + utils.random(400), 100 + utils.random(400))});
-        }
+        this.addEnemyToGame(10); // zIndex: 3
 
-        personCollisions.push(this.addGameObject(Weapon, {pos: new Vector2D(20, 40)}));
-        personCollisions.push(this.addGameObject(Weapon, {pos: new Vector2D(20, 340)}));
+        personCollisions.push(this.addGameObject(Weapon, {pos: new Vector2D(20, 40), zIndex: 4}));
+        personCollisions.push(this.addGameObject(Weapon, {pos: new Vector2D(20, 340), zIndex: 4}));
         
-        this.person = this.addGameObject(Person);
+        this.person = this.addGameObject(Person, {zIndex: 5});
         this.person.setListCollisions(personCollisions);
-        
-        for(let i = 0; i < 5; i++){
-            this.addGameObject(Magazine, {
-                pos: new Vector2D(150 + utils.random(500), 150 + utils.random(500)),
-                listCollisions: [this.person]
-            });
-        }
 
-        this.aim = this.addGameObject(Aim);
-        
-        this.addGameObject(GoView);
+        this.addMagazineToGame(5); // zIndex: 2
 
+        this.aim = this.addGameObject(Aim, {zIndex: 5});
         
+        this.addGameObject(GoView, {zIndex: 10});
     }
     
+    addEnemyToGame(count, pos = {x: 0, y: 0}){
+        for(let i = 0; i < count; i++){
+            this.addGameObject(Enemy, {
+                pos: new Vector2D(pos.x + utils.random(400) - 200, pos.y + utils.random(400) - 200),
+                zIndex: 3
+            });
+        }
+    }
+
+    addMagazineToGame(count, pos = {x: 150, y: 150}){
+        for(let i = 0; i < count; i++){
+            this.addGameObject(Magazine, {
+                pos: new Vector2D(pos.x + utils.random(500) - 250, pos.y + utils.random(500) - 250),
+                listCollisions: [this.person],
+                zIndex: 2,
+            });
+        }
+    }
+
     addGameObject(gameObject, opt){
         gameObject = this.gameObjectMgr.create(gameObject, opt);
         
-        return this.gameObjectsList[gameObject.getHandle()] = gameObject;
+        this.gameObjectsList.push(gameObject)
+
+        return gameObject;
     }
     
     delGameObject(gameObject){
-        delete this.gameObjectsList[gameObject.getHandle()];
+        const index = this.gameObjectsList.indexOf(gameObject);
+
+        if( !(index < 0) )
+            this.gameObjectsList.splice(index, 1);
+
+        if( !this.getObjectListByCls(Enemy).length )
+            this.addEnemyToGame(10 + utils.random(20), this.person.pos);
+
+        if( !this.getObjectListByCls(Magazine).length )
+            this.addMagazineToGame(5 + utils.random(5), this.person.pos);
     }
     
     getObjectListByCls(Class){
