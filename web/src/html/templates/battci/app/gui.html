@@ -1,5 +1,16 @@
 <script type="text/plain" id="gui">
     <div>
         <input type="text" class="gui__fps" readonly>
+
+        <div class="ammo gui__ammo">
+            <div class="ammo__person">
+                {{=lg('ammo-person', 'char-colon', 'char-nspace')}}
+                <span class="ammo__person_count"></span>
+            </div>
+            <div class="ammo__weapon">
+                {{=lg('ammo-weapon', 'char-colon', 'char-nspace')}}
+                <span class="ammo__weapon_count">-</span>
+            </div>
+        </div>
     </div>
 </script>
