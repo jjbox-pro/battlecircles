@@ -22,7 +22,7 @@ export const wndMgr = new WndMgr();
 
 
 
-wndMgr.push(new Wnd);
+
 
 
 
